@@ -1,0 +1,29 @@
+# macOS
+.DS_Store
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+
+# Node
+node_modules/
+npm-debug.log*
+
+# IDE
+.vscode/
+.idea/
+
+# Environment & secrets — NEVER commit these
+.env
+.env.*
+*.pem
+aws-credentials.json
+
+# Build / deploy artifacts
+dist/
+build/
+*.zip
