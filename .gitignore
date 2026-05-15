@@ -27,3 +27,5 @@ aws-credentials.json
 dist/
 build/
 *.zip
+.aws-sam/
+samconfig.toml
