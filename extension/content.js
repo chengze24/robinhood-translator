@@ -1,5 +1,7 @@
 console.log("[Robinhood Translator] loaded on:", window.location.href);
 
+const TRANSLATE_URL = "https://g7qurbrxgk.execute-api.us-east-1.amazonaws.com/translate";
+
 const TOOLTIP_ID = "rh-translator-tooltip";
 
 // Create or reuse the tooltip element
@@ -57,7 +59,7 @@ document.addEventListener("mouseup", async () => {
 
   // Fetch translation
   try {
-    const res = await fetch("http://localhost:8000/translate", {
+    const res = await fetch(TRANSLATE_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ text }),
