@@ -9,6 +9,10 @@ load_dotenv()
 
 app = FastAPI()
 
+from mangum import Mangum
+
+handler = Mangum(app)
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["https://robinhood.com"],
