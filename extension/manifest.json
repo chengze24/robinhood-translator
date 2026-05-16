@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Robinhood Translator",
-  "version": "0.3.0",
+  "version": "0.4.3",
   "host_permissions": [
     "http://localhost:8000/*",
     "https://g7qurbrxgk.execute-api.us-east-1.amazonaws.com/*"
