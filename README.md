@@ -3,7 +3,7 @@
 A Chrome extension + AWS-hosted backend that adds Chinese translation to Robinhood for non-English-speaking retail traders. Built primarily for my father — a retail investor who reads no English — to help him understand the news, summaries, and prose-heavy content on his trading dashboard.
 
 > Select text or hover for 2 seconds. A floating tooltip shows the Chinese translation in place, with financial-term glosses and preserved ticker symbols.
-<a href="docs/image_1.png"></a>
+![Demonstration](docs/image_1.png)
 ## The problem
 
 Robinhood is a US-only product with no Chinese localization. Browser-level translation tools (Google Translate) handle parts of the page but break on dynamic React-rendered content and hyperlinked news cards using stretched-link patterns. For someone who already navigates Robinhood by spatial memory, what's missing isn't the UI — it's the *content*: news summaries about held stocks, analyst commentary, earnings details, financial jargon in everyday prose.
