@@ -35,6 +35,10 @@ Resources:
       Environment:
         Variables:
           ANTHROPIC_API_KEY: !Ref AnthropicApiKey
+          CACHE_TABLE_NAME: !Ref TranslationCache
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref TranslationCache
       Events:
         Translate:
           Type: HttpApi
@@ -48,6 +52,21 @@ Resources:
             ApiId: !Ref TranslatorApi
             Path: /health
             Method: GET
+
+  TranslationCache:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Sub "${AWS::StackName}-translation-cache"
+      AttributeDefinitions:
+        - AttributeName: key
+          AttributeType: S
+      KeySchema:
+        - AttributeName: key
+          KeyType: HASH
+      BillingMode: PAY_PER_REQUEST
+      TimeToLiveSpecification:
+        AttributeName: expires_at
+        Enabled: true
 
 Outputs:
   ApiUrl:
