@@ -1,9 +1,15 @@
+import json
+import logging
 import os
+import time
 from dotenv import load_dotenv
 import anthropic
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
+
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
 
 load_dotenv()
 
@@ -46,15 +52,33 @@ def health():
     return {"status": "ok"}
 
 
+MODEL = "claude-sonnet-4-6"
+
+
 @app.post("/translate")
 def translate(req: TranslateRequest):
+    t0 = time.monotonic()
     try:
         message = client.messages.create(
-            model="claude-sonnet-4-6",
+            model=MODEL,
             max_tokens=1024,
             system=SYSTEM_PROMPT,
             messages=[{"role": "user", "content": req.text}],
         )
+        latency_ms = int((time.monotonic() - t0) * 1000)
+        logger.info(json.dumps({
+            "event": "translate_request",
+            "input_chars": len(req.text),
+            "input_tokens": message.usage.input_tokens,
+            "output_tokens": message.usage.output_tokens,
+            "model": MODEL,
+            "latency_ms": latency_ms,
+            "cache_hit": False,
+        }))
         return {"translation": message.content[0].text}
     except anthropic.APIError as e:
+        logger.info(json.dumps({
+            "event": "translate_error",
+            "error": str(e),
+        }))
         raise HTTPException(status_code=502, detail=str(e))
